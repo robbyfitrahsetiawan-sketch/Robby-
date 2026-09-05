@@ -6,7 +6,7 @@
   <title>Oil & Gas Formula Calculator</title>
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, sans-serif; background: #101318; color: #eee; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #101318; color: #eee; padding-bottom: 40px; }
     header { padding: 18px; background: #171c23; position: sticky; top: 0; z-index: 5; border-bottom: 1px solid #2b323d; }
     h1 { margin: 0; font-size: 20px; }
     header p { margin: 5px 0 0; color: #9da7b5; font-size: 13px; }
@@ -26,9 +26,26 @@
     .small { font-size: 12px; color: #929cab; }
     .danger { color: #ffb0b0; }
     
-    /* Pengatur Tab Konten */
+    /* Pengatur Tampilan Tab Konten */
     .tab-content { display: none; }
-    .tab-content.active { display: block; }
+
+    /* MARKING "bay" POJOK KANAN BAWAH */
+    .corner-mark {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(23, 28, 35, 0.95);
+      color: #00e676;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      border: 1px solid #2b323d;
+      z-index: 999;
+      pointer-events: none;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
   </style>
 </head>
 <body>
@@ -38,20 +55,20 @@
     <p>Offline • HWU • Snubbing • Well Control • Pump • Volume • Pipe</p>
   </header>
 
-  <nav id="topNav">
-    <button type="button" class="nav-btn active" data-target="home">Home</button>
-    <button type="button" class="nav-btn" data-target="sec_pressure">Pressure</button>
-    <button type="button" class="nav-btn" data-target="sec_snubbing">Snubbing</button>
-    <button type="button" class="nav-btn" data-target="sec_volume">Volume</button>
-    <button type="button" class="nav-btn" data-target="sec_pump">Pump</button>
-    <button type="button" class="nav-btn" data-target="sec_fluid">Fluid</button>
-    <button type="button" class="nav-btn" data-target="sec_wellcontrol">Well Control</button>
-    <button type="button" class="nav-btn" data-target="sec_rop">ROP</button>
+  <nav>
+    <button type="button" class="nav-btn active" onclick="openTab('home', this)">Home</button>
+    <button type="button" class="nav-btn" onclick="openTab('sec_pressure', this)">Pressure</button>
+    <button type="button" class="nav-btn" onclick="openTab('sec_snubbing', this)">Snubbing</button>
+    <button type="button" class="nav-btn" onclick="openTab('sec_volume', this)">Volume</button>
+    <button type="button" class="nav-btn" onclick="openTab('sec_pump', this)">Pump</button>
+    <button type="button" class="nav-btn" onclick="openTab('sec_fluid', this)">Fluid</button>
+    <button type="button" class="nav-btn" onclick="openTab('sec_wellcontrol', this)">Well Control</button>
+    <button type="button" class="nav-btn" onclick="openTab('sec_rop', this)">ROP</button>
   </nav>
 
   <main>
     <!-- HOME -->
-    <section id="home" class="tab-content active">
+    <section id="home" class="tab-content" style="display: block;">
       <div class="card">
         <h2>Rumus Inti</h2>
         <div class="formula">KMW = OMW + (SIDPP / (0.052 × TVD))</div>
@@ -392,15 +409,4 @@
         <h3>Initial Circulating Pressure (ICP)</h3>
         <div class="formula">ICP = SIDPP + SCR</div>
         <div class="grid">
-          <div><label>SIDPP (psi)</label><input type="number" id="icp_sidpp" step="any"></div>
-          <div><label>SCR / Kill Rate Pressure (psi)</label><input type="number" id="icp_scr" step="any"></div>
-        </div>
-        <button type="button" class="calc" onclick="calcICP()">Hitung ICP</button>
-        <div class="result" id="icp_r">Hasil: —</div>
-      </div>
-
-      <div class="card">
-        <h3>Final Circulating Pressure (FCP)</h3>
-        <div class="formula">FCP = SCR × (KMW / OMW)</div>
-        <div class="grid">
-          <div><label>SCR / Kill Rate Pressure (psi)</label><input type="number" id="fcp
+          <div><label>SIDPP (psi)</label><input type="number" id="icp_sidpp" st
