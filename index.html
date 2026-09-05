@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oil & Gas Formula Calculator</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #101318; color: #eee; padding-bottom: 30px; }
+    header { padding: 18px; background: #171c23; position: sticky; top: 0; z-index: 5; border-bottom: 1px solid #2b323d; }
+    h1 { margin: 0; font-size: 20px; }
+    header p { margin: 5px 0 0; color: #9da7b5; font-size: 13px; }
+    nav { display: flex; gap: 7px; overflow-x: auto; padding: 10px; background: #171c23; -webkit-overflow-scrolling: touch; }
+    nav button { white-space: nowrap; border: 1px solid #343c48; background: #222934; color: #ddd; border-radius: 8px; padding: 10px 14px; cursor: pointer; font-size: 14px; outline: none; -webkit-tap-highlight-color: transparent; }
+    nav button.active { background: #ffffff; color: #111111; font-weight: bold; border-color: #ffffff; }
+    main { max-width: 900px; margin: auto; padding: 14px; }
+    .card { background: #181e26; border: 1px solid #2a323e; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
+    h2 { font-size: 18px; margin: 0 0 12px; }
+    h3 { font-size: 15px; margin: 0 0 10px; color: #fff; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    label { display: block; font-size: 12px; color: #aab3c0; margin-bottom: 5px; }
+    input, select { width: 100%; padding: 10px; border-radius: 7px; border: 1px solid #394352; background: #0f1318; color: #fff; font-size: 14px; }
+    button.calc { margin-top: 10px; width: 100%; padding: 11px; border: 0; border-radius: 8px; background: #eee; color: #111; font-weight: bold; cursor: pointer; }
+    .result { margin-top: 10px; padding: 11px; border-radius: 8px; background: #0e1512; border: 1px solid #304536; color: #d8f5df; font-weight: bold; }
+    .formula { font-family: monospace; color: #b9c5d6; background: #11161d; padding: 8px; border-radius: 7px; font-size: 13px; margin-bottom: 9px; word-break: break-all; }
+    .small { font-size: 12px; color: #929cab; }
+    .danger { color: #ffb0b0; }
+    
+    /* Pengatur Tab Konten */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* MARKING "bay" POJOK KANAN BAWAH */
+    .corner-mark {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(23, 28, 35, 0.9);
+      color: #00e676;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      border: 1px solid #2b323d;
+      z-index: 999;
+      pointer-events: none;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🛢️ Oil & Gas Formula Calculator</h1>
+    <p>Offline • HWU • Snubbing • Well Control • Pump • Volume • Pipe</p>
+  </header>
+
+  <nav id="topNav">
+    <button type="button" class="nav-btn active" data-target="home">Home</button>
+    <button type="button" class="nav-btn" data-target="sec_pressure">Pressure</button>
+    <button type="button" class="nav-btn" data-target="sec_snubbing">Snubbing</button>
+    <button type="button" class="nav-btn" data-target="sec_volume">Volume</button>
+    <button type="button" class="nav-btn" data-target="sec_pump">Pump</button>
+    <button type="button" class="nav-btn" data-target="sec_fluid">Fluid</button>
+    <button type="button" class="nav-btn" data-target="sec_wellcontrol">Well Control</button>
+    <button type="button" class="nav-btn" data-target="sec_rop">ROP</button>
+  </nav>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="tab-content active">
+      <div class="card">
+        <h2>Rumus Inti</h2>
+        <div class="formula">KMW = OMW + (SIDPP / (0.052 × TVD))</div>
+        <div class="formula">ICP = SIDPP + SCR</div>
+        <div class="formula">FCP = SCR × (KMW / OMW)</div>
+        <div class="formula">Hi-Vis Pill → Total kg = BBL × Dosis (ppb) × 0.4536</div>
+        <div class="formula">KCl (Target SG) → kg/L = (SG − 1) / (2.42 − SG)</div>
+        <div class="formula">KCl (Target %) → Lbs = BBL × 42 × PPG × (% / 100)</div>
+        <div class="formula">BF = (65.5 − MW) / 65.5</div>
+        <div class="formula">HP = 0.052 × MW × TVD</div>
+        <div class="formula">PG = 0.052 × MW</div>
+        <div class="formula">Force = Pressure × Area</div>
+        <div class="formula">Area = π/4 × (OD² − ID²)</div>
+        <div class="formula">Pipe capacity = ID² / 1029.4 bbl/ft</div>
+        <div class="formula">Annular capacity = (ID² − OD²) / 1029.4 bbl/ft</div>
+        <div class="formula">Bbl/stroke = 0.000243 × D² × L × Efficiency</div>
+        <p class="small">Catatan: Kalkulator ini mengumpulkan rumus yang pernah kita bahas. Untuk operasi nyata, selalu verifikasi dengan prosedur perusahaan, well program, data aktual equipment, dan engineer/supervisor.</p>
+      </div>
+    </section>
+
+    <!-- PRESSURE -->
+    <section id="sec_pressure" class="tab-content">
+      <div class="card">
+        <h3>Hydrostatic Pressure</h3>
+        <div class="formula">HP = 0.052 × MW × TVD</div>
+        <div class="grid">
+          <div><label>MW (ppg)</label><input type="number" id="hp_mw" step="any"></div>
+          <div><label>TVD (ft)</label><input type="number" id="hp_tvd" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcHP()">Hitung</button>
+        <div class="result" id="hp_r">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Pressure Gradient</h3>
+        <div class="formula">PG = 0.052 × MW</div>
+        <div><label>MW (ppg)</label><input type="number" id="pg_mw" step="any"></div>
+        <button type="button" class="calc" onclick="calcPG()">Hitung</button>
+        <div class="result" id="pg_r">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>MW dari Pressure</h3>
+        <div class="formula">MW = P / (0.052 × TVD)</div>
+        <div class="grid">
+          <div><label>Pressure (psi)</label><input type="number" id="mwp" step="any"></div>
+          <div><label>TVD (ft)</label><input type="number" id="mwt" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcMW()">Hitung</button>
+        <div class="result" id="mwr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Pressure dari Gradient</h3>
+        <div class="formula">P = Gradient × TVD</div>
+        <div class="grid">
+          <div><label>Gradient (psi/ft)</label><input type="number" id="pgr" step="any"></div>
+          <div><label>TVD (ft)</label><input type="number" id="pgt" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcP()">Hitung</button>
+        <div class="result" id="pr">Hasil: —</div>
+      </div>
+    </section>
+
+    <!-- SNUBBING -->
+    <section id="sec_snubbing" class="tab-content">
+      <div class="card">
+        <h3>Buoyancy Factor</h3>
+        <div class="formula">BF = (65.5 − MW) / 65.5</div>
+        <div><label>MW (ppg)</label><input type="number" id="bfmw" step="any"></div>
+        <button type="button" class="calc" onclick="calcBF()">Hitung</button>
+        <div class="result" id="bfr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Buoyed Pipe Weight</h3>
+        <div class="formula">W buoyed = W air × BF</div>
+        <div class="grid">
+          <div><label>Weight in air (lb)</label><input type="number" id="bwa" step="any"></div>
+          <div><label>BF</label><input type="number" id="bfb" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcBW()">Hitung</button>
+        <div class="result" id="bwr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Effective Piston Area</h3>
+        <div class="formula">A = π/4 × (OD² − ID²)</div>
+        <div class="grid">
+          <div><label>OD pipe (in)</label><input type="number" id="ao" step="any"></div>
+          <div><label>ID pipe (in)</label><input type="number" id="ai" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcArea()">Hitung</button>
+        <div class="result" id="ar">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Pressure Force</h3>
+        <div class="formula">F = ΔP × Area</div>
+        <div class="grid">
+          <div><label>Pressure (psi)</label><input type="number" id="fp" step="any"></div>
+          <div><label>Area (in²)</label><input type="number" id="fa" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcForce()">Hitung</button>
+        <div class="result" id="fr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Balance Point</h3>
+        <div class="formula">N = (P × Area) / (Joint Weight × BF)</div>
+        <div class="grid">
+          <div><label>Pressure (psi)</label><input type="number" id="np" step="any"></div>
+          <div><label>Effective Area (in²)</label><input type="number" id="na" step="any"></div>
+          <div><label>Joint weight in air (lb)</label><input type="number" id="nw" step="any"></div>
+          <div><label>BF</label><input type="number" id="nb" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcBalance()">Hitung</button>
+        <div class="result" id="nr">Hasil: —</div>
+      </div>
+    </section>
+
+    <!-- VOLUME -->
+    <section id="sec_volume" class="tab-content">
+      <div class="card">
+        <h3>Pipe Internal Capacity</h3>
+        <div class="formula">Capacity = ID² / 1029.4 bbl/ft</div>
+        <div class="grid">
+          <div><label>ID (in)</label><input type="number" id="pid" step="any"></div>
+          <div><label>Length (ft)</label><input type="number" id="plen" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="pipeVol()">Hitung</button>
+        <div class="result" id="pvr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Annular Capacity</h3>
+        <div class="formula">Capacity = (ID hole² − OD pipe²) / 1029.4 bbl/ft</div>
+        <div class="grid">
+          <div><label>ID hole/casing (in)</label><input type="number" id="ahid" step="any"></div>
+          <div><label>OD pipe (in)</label><input type="number" id="aod" step="any"></div>
+          <div><label>Length (ft)</label><input type="number" id="alen" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="annVol()">Hitung</button>
+        <div class="result" id="avr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Pipe Length / Joint</h3>
+        <div class="formula">Total length = Joint × Length/joint</div>
+        <div class="grid">
+          <div><label>Jumlah joint</label><input type="number" id="jl_n" step="any"></div>
+          <div><label>Length/joint (ft)</label><input type="number" id="jl_l" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="jointLen()">Hitung</button>
+        <div class="result" id="jlr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Jumlah Joint dari Total Length</h3>
+        <div class="formula">N = Total length / Length per joint</div>
+        <div class="grid">
+          <div><label>Total length (ft)</label><input type="number" id="jn_t" step="any"></div>
+          <div><label>Length/joint (ft)</label><input type="number" id="jn_l" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="jointNum()">Hitung</button>
+        <div class="result" id="jnr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>m³ → Liter</h3>
+        <div class="formula">Liter = m³ × 1000</div>
+        <div><label>Volume (m³)</label><input type="number" id="m3" step="any"></div>
+        <button type="button" class="calc" onclick="m3l()">Hitung</button>
+        <div class="result" id="m3r">Hasil: —</div>
+      </div>
+    </section>
+
+    <!-- PUMP -->
+    <section id="sec_pump" class="tab-content">
+      <div class="card">
+        <h3>Triplex Pump — Bbl/Stroke</h3>
+        <div class="formula">Bbl/stroke = 0.000243 × D² × L × Efficiency</div>
+        <div class="grid">
+          <div><label>Liner diameter D (in)</label><input type="number" id="pd" step="any"></div>
+          <div><label>Liner length L (in)</label><input type="number" id="pl" step="any"></div>
+          <div><label>Efficiency (%)</label><input type="number" id="pe" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="pumpBPS()">Hitung</button>
+        <div class="result" id="pbr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Volume Pumped</h3>
+        <div class="formula">Volume = Bbl/stroke × Stroke</div>
+        <div class="grid">
+          <div><label>Bbl/stroke</label><input type="number" id="vb" step="any"></div>
+          <div><label>Stroke</label><input type="number" id="vs" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="pumpVol()">Hitung</button>
+        <div class="result" id="pvr2">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Stroke dari Volume</h3>
+        <div class="formula">Stroke = Volume / Bbl/stroke</div>
+        <div class="grid">
+          <div><label>Volume (bbl)</label><input type="number" id="sv" step="any"></div>
+          <div><label>Bbl/stroke</label><input type="number" id="sb" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="stroke()">Hitung</button>
+        <div class="result" id="sr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>BPM dari SPM</h3>
+        <div class="formula">BPM = Bbl/stroke × SPM</div>
+        <div class="grid">
+          <div><label>Bbl/stroke</label><input type="number" id="bp" step="any"></div>
+          <div><label>SPM</label><input type="number" id="bs" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="bpm()">Hitung</button>
+        <div class="result" id="bpmr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>SPM dari BPM</h3>
+        <div class="formula">SPM = BPM / Bbl/stroke</div>
+        <div class="grid">
+          <div><label>BPM</label><input type="number" id="spb" step="any"></div>
+          <div><label>Bbl/stroke</label><input type="number" id="spv" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="spm()">Hitung</button>
+        <div class="result" id="spmr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Pumping Time</h3>
+        <div class="formula">Time = Volume / BPM</div>
+        <div class="grid">
+          <div><label>Volume (bbl)</label><input type="number" id="tv" step="any"></div>
+          <div><label>Rate (BPM)</label><input type="number" id="tb" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="ptime()">Hitung</button>
+        <div class="result" id="ptr">Hasil: —</div>
+      </div>
+    </section>
+
+    <!-- FLUID -->
+    <section id="sec_fluid" class="tab-content">
+      <div class="card">
+        <h3>PPG ↔ SG</h3>
+        <div class="grid">
+          <div><label>MW (ppg)</label><input type="number" id="sgmw" step="any"></div>
+          <div><label>SG</label><input type="number" id="sg" step="any"></div>
+        </div>
+        <div class="grid" style="margin-top:10px;">
+          <button type="button" class="calc" onclick="ppgsg()">Hitung SG dari PPG</button>
+          <button type="button" class="calc" onclick="sgppg()">Hitung PPG dari SG</button>
+        </div>
+        <div class="result" id="sgr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Hydrostatic dari SG</h3>
+        <div class="formula">HP = 0.433 × SG × TVD</div>
+        <div class="grid">
+          <div><label>SG</label><input type="number" id="hsg" step="any"></div>
+          <div><label>TVD (ft)</label><input type="number" id="hst" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="hsgCalc()">Hitung</button>
+        <div class="result" id="hsgr">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Hi-Vis Pill Mixing (Kebutuhan Polymer)</h3>
+        <div class="formula">Dosis: &lt;55s (1 ppb) | 55-75s (2 ppb) | &gt;75s (3 ppb)<br>Total kg = BBL × ppb × 0.4536</div>
+        <div class="grid">
+          <div><label>Total Volume (bbl)</label><input type="number" id="hivis_bbl" step="any"></div>
+          <div><label>Target Viscosity (sec/qt)</label><input type="number" id="hivis_vis" step="any"></div>
+          <div><label>Berat per Sak (kg)</label><input type="number" id="hivis_sak" value="25" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcHiVis()">Hitung Kebutuhan Hi-Vis</button>
+        <div class="result" id="hivis_r">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>KCl Mixing — Target SG (Kebutuhan Berat)</h3>
+        <div class="formula">kg/L = (SG − 1) / (2.42 − SG)</div>
+        <div class="grid">
+          <div><label>Total Volume (bbl)</label><input type="number" id="kcl_sg_bbl" step="any"></div>
+          <div><label>Target SG</label><input type="number" id="kcl_sg_target" step="any"></div>
+          <div><label>Berat per Sak (kg)</label><input type="number" id="kcl_sg_sak" value="50" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcKclTargetSG()">Hitung Kebutuhan KCl</button>
+        <div class="result" id="kcl_sg_r">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>KCl Mixing — Target % KCl (Kebutuhan Berat)</h3>
+        <div class="formula">Total Lbs = BBL × 42 × PPG × (% / 100)</div>
+        <div class="grid">
+          <div><label>Total Volume (bbl)</label><input type="number" id="kcl_pct_bbl" step="any"></div>
+          <div><label>Density (ppg)</label><input type="number" id="kcl_pct_ppg" step="any"></div>
+          <div><label>Target KCl (%)</label><input type="number" id="kcl_pct_val" step="any"></div>
+          <div><label>Berat per Sak (kg)</label><input type="number" id="kcl_pct_sak" value="50" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcKclTargetPercent()">Hitung Kebutuhan KCl</button>
+        <div class="result" id="kcl_pct_r">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>KCl Mixing — Penambahan Berat (Hasil Kadar SG & %)</h3>
+        <div class="formula">Hitung SG & % KCl akhir dari kg KCl yang ditambah</div>
+        <div class="grid">
+          <div><label>Total Volume (bbl)</label><input type="number" id="kcl_h_bbl" step="any"></div>
+          <div><label>Total KCl Ditambah (kg)</label><input type="number" id="kcl_h_kg" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcKclHasil()">Hitung Kadar Hasil</button>
+        <div class="result" id="kcl_h_r">Hasil: —</div>
+      </div>
+    </section>
+
+    <!-- WELL CONTROL -->
+    <section id="sec_wellcontrol" class="tab-content">
+      <div class="card">
+        <h3>Kill Mud Weight (KMW)</h3>
+        <div class="formula">KMW = OMW + (SIDPP / (0.052 × TVD))</div>
+        <div class="grid">
+          <div><label>OMW - Original Mud Weight (ppg)</label><input type="number" id="kmw_omw" step="any"></div>
+          <div><label>SIDPP (psi)</label><input type="number" id="kmw_sidpp" step="any"></div>
+          <div><label>TVD (ft)</label><input type="number" id="kmw_tvd" step="any"></div>
+        </div>
+        <button type="button" class="calc" onclick="calcKMW()">Hitung KMW</button>
+        <div class="result" id="kmw_r">Hasil: —</div>
+      </div>
+
+      <div class="card">
+        <h3>Initial Circulating Pressure (ICP)</h3>
+        <div class="formula">ICP = SIDPP + SCR</div>
+        <div class="grid">
+          <div><label>SIDPP (psi)</label><input type="number" id="icp_sidpp" step="any"></div>
+          <div><label>SCR / Kill Rate Pressure (psi)</label
