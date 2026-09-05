@@ -1,0 +1,407 @@
+Oil & Gas Formula Calculator *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#101318;color:#eee} header{padding:18px;background:#171c23;position:sticky;top:0;z-index:5;border-bottom:1px solid #2b323d} h1{margin:0;font-size:22px}header p{margin:5px 0 0;color:#9da7b5;font-size:13px} nav{display:flex;gap:7px;overflow:auto;padding:10px;background:#171c23} nav button{white-space:nowrap;border:1px solid #343c48;background:#222934;color:#ddd;border-radius:8px;padding:9px 12px} nav button.active{background:#eee;color:#111} main{max-width:900px;margin:auto;padding:14px} .card{background:#181e26;border:1px solid #2a323e;border-radius:12px;padding:15px;margin-bottom:12px} h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:0 0 10px;color:#fff} .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px} label{display:block;font-size:12px;color:#aab3c0;margin-bottom:5px} input,select{width:100%;padding:10px;border-radius:7px;border:1px solid #394352;background:#0f1318;color:#fff;font-size:14px} button.calc{margin-top:10px;width:100%;padding:11px;border:0;border-radius:8px;background:#eee;color:#111;font-weight:bold} .result{margin-top:10px;padding:11px;border-radius:8px;background:#0e1512;border:1px solid #304536;color:#d8f5df;font-weight:bold} .formula{font-family:monospace;color:#b9c5d6;background:#11161d;padding:8px;border-radius:7px;font-size:13px;margin-bottom:9px} .small{font-size:12px;color:#929cab}.hidden{display:none} .search{margin:10px 0}.danger{color:#ffb0b0} 
+
+bay
+
+🛢️ Oil & Gas Formula Calculator
+
+Offline • HWU • Snubbing • Well Control • Pump • Volume • Pipe
+
+Home Pressure Snubbing Volume Pump Fluid Well Control ROP 
+
+Rumus inti
+
+BF = (65.5 − MW) / 65.5
+
+HP = 0.052 × MW × TVD
+
+PG = 0.052 × MW
+
+Force = Pressure × Area
+
+Area = π/4 × (OD² − ID²)
+
+Pipe capacity = ID² / 1029.4 bbl/ft
+
+Annular capacity = (ID² − OD²) / 1029.4 bbl/ft
+
+Bbl/stroke = 0.000243 × D² × L × Efficiency
+
+Catatan
+
+Kalkulator ini mengumpulkan rumus yang pernah kita bahas. Untuk operasi nyata, selalu verifikasi dengan prosedur perusahaan, well program, data aktual equipment, dan engineer/supervisor.
+
+Hydrostatic Pressure
+
+HP = 0.052 × MW × TVD
+
+MW (ppg)
+
+TVD (ft)
+
+Hitung
+
+Hasil: —
+
+Pressure Gradient
+
+PG = 0.052 × MW
+
+MW (ppg)
+
+Hitung
+
+Hasil: —
+
+MW dari Pressure
+
+MW = P / (0.052 × TVD)
+
+Pressure (psi)
+
+TVD (ft)
+
+Hitung
+
+Hasil: —
+
+Pressure dari Gradient
+
+P = Gradient × TVD
+
+Gradient (psi/ft)
+
+TVD (ft)
+
+Hitung
+
+Hasil: —
+
+Buoyancy Factor
+
+BF = (65.5 − MW) / 65.5
+
+MW (ppg)
+
+Hitung
+
+Hasil: —
+
+Buoyed Pipe Weight
+
+W buoyed = W air × BF
+
+Weight in air (lb)
+
+BF
+
+Hitung
+
+Hasil: —
+
+Effective Piston Area
+
+A = π/4 × (OD² − ID²)
+
+OD pipe (in)
+
+ID pipe (in)
+
+Hitung
+
+Hasil: —
+
+Pressure Force
+
+F = ΔP × Area
+
+Pressure (psi)
+
+Area (in²)
+
+Hitung
+
+Hasil: —
+
+Balance Point
+
+N = (P × Area) / (Joint Weight × BF)
+
+Pressure (psi)
+
+Effective Area (in²)
+
+Joint weight in air (lb)
+
+BF
+
+Hitung
+
+Hasil: —
+
+Pipe Internal Capacity
+
+Capacity = ID² / 1029.4 bbl/ft
+
+ID (in)
+
+Length (ft)
+
+Hitung
+
+Hasil: —
+
+Annular Capacity
+
+Capacity = (ID hole² − OD pipe²) / 1029.4 bbl/ft
+
+ID hole/casing (in)
+
+OD pipe (in)
+
+Length (ft)
+
+Hitung
+
+Hasil: —
+
+Pipe Length / Joint
+
+Total length = Joint × Length/joint
+
+Jumlah joint
+
+Length/joint (ft)
+
+Hitung
+
+Hasil: —
+
+Jumlah Joint dari Total Length
+
+N = Total length / Length per joint
+
+Total length (ft)
+
+Length/joint (ft)
+
+Hitung
+
+Hasil: —
+
+m³ → Liter
+
+Liter = m³ × 1000
+
+Volume (m³)
+
+Hitung
+
+Hasil: —
+
+Triplex Pump — Bbl/Stroke
+
+Bbl/stroke = 0.000243 × D² × L × Efficiency
+
+Liner diameter D (in)
+
+Liner length L (in)
+
+Efficiency (%)
+
+Hitung
+
+Hasil: —
+
+Volume Pumped
+
+Volume = Bbl/stroke × Stroke
+
+Bbl/stroke
+
+Stroke
+
+Hitung
+
+Hasil: —
+
+Stroke dari Volume
+
+Stroke = Volume / Bbl/stroke
+
+Volume (bbl)
+
+Bbl/stroke
+
+Hitung
+
+Hasil: —
+
+BPM dari SPM
+
+BPM = Bbl/stroke × SPM
+
+Bbl/stroke
+
+SPM
+
+Hitung
+
+Hasil: —
+
+SPM dari BPM
+
+SPM = BPM / Bbl/stroke
+
+BPM
+
+Bbl/stroke
+
+Hitung
+
+Hasil: —
+
+Pumping Time
+
+Time = Volume / BPM
+
+Volume (bbl)
+
+Rate (BPM)
+
+Hitung
+
+Hasil: —
+
+PPG ↔ SG
+
+MW (ppg)
+
+SG
+
+Hitung SG dari PPG Hitung PPG dari SG 
+
+Hasil: —
+
+Hydrostatic dari SG
+
+HP = 0.433 × SG × TVD
+
+SG
+
+TVD (ft)
+
+Hitung
+
+Hasil: —
+
+KCl Mixing
+
+KCl (sack) = 5.63 × (SG mix − 1) × BBL
+
+SG mix
+
+Volume (bbl)
+
+Hitung
+
+Hasil: —
+
+Formation Pressure dari Underbalance
+
+P formation = P hydrostatic + Underbalance
+
+Hydrostatic (psi)
+
+Underbalance (psi)
+
+Hitung
+
+Hasil: —
+
+Differential Pressure
+
+ΔP = P1 − P2
+
+P1 (psi)
+
+P2 (psi)
+
+Hitung
+
+Hasil: —
+
+Overbalance
+
+Overbalance = Hydrostatic − Formation
+
+Hydrostatic (psi)
+
+Formation (psi)
+
+Hitung
+
+Hasil: —
+
+Volume Gain / Loss
+
+Change = Current volume − Initial volume
+
+Current volume
+
+Initial volume
+
+Hitung
+
+Hasil: —
+
+MAASP — simplified
+
+MAASP = Fracture pressure limit − Hydrostatic pressure
+
+Fracture limit (psi)
+
+Hydrostatic (psi)
+
+Hitung
+
+Hasil: —
+
+Versi sederhana untuk belajar. MAASP operasional harus mengikuti basis data dan prosedur well-control yang berlaku.
+
+ROP
+
+ROP = Penetration / Time
+
+Penetration (m)
+
+Time (hour)
+
+Hitung ROP
+
+Hasil: —
+
+Penetration dari ROP
+
+Penetration = ROP × Time
+
+ROP (m/hr)
+
+Time (hr)
+
+Hitung
+
+Hasil: —
+
+Time dari Depth & ROP
+
+Time = Depth / ROP
+
+Depth (m)
+
+ROP (m/hr)
+
+Hitung
+
+Hasil: —
+
+const $=id=>parseFloat(document.getElementById(id).value); const out=(id,text)=>document.getElementById(id).textContent='Hasil: '+text; const n=x=>Number.isFinite(x)?x.toLocaleString('id-ID',{maximumFractionDigits:4}):'Input tidak valid'; function show(id,b){document.querySelectorAll('main section').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')} function calcHP(){out('hp_r',n(.052*$('hp_mw')*$('hp_tvd'))+' psi')} function calcPG(){out('pg_r',n(.052*$('pg_mw'))+' psi/ft')} function calcMW(){out('mwr',n($('mwp')/(.052*$('mwt')))+' ppg')} function calcP(){out('pr',n($('pgr')*$('pgt'))+' psi')} function calcBF(){out('bfr',n((65.5-$('bfmw'))/65.5))} function calcBW(){out('bwr',n($('bwa')*$('bfb'))+' lb')} function calcArea(){out('ar',n(Math.PI/4*($('ao')**2-$('ai')**2))+' in²')} function calcForce(){out('fr',n($('fp')*$('fa'))+' lb')} function calcBalance(){let f=$('np')*$('na'),w=$('nw')*$('nb');out('nr',n(f/w)+' joint')} function pipeVol(){let c=$('pid')**2/1029.4;out('pvr',n(c)+' bbl/ft | Total: '+n(c*$('plen'))+' bbl')} function annVol(){let c=($('ahid')**2-$('aod')**2)/1029.4;out('avr',n(c)+' bbl/ft | Total: '+n(c*$('alen'))+' bbl')} function jointLen(){out('jlr',n($('jl_n')*$('jl_l'))+' ft')} function jointNum(){out('jnr',n($('jn_t')/$('jn_l'))+' joint')} function m3l(){out('m3r',n($('m3')*1000)+' liter')} function pumpBPS(){out('pbr',n(.000243*$('pd')**2*$('pl')*($('pe')/100))+' bbl/stroke')} function pumpVol(){out('pvr2',n($('vb')*$('vs'))+' bbl')} function stroke(){out('sr',n($('sv')/$('sb'))+' stroke')} function bpm(){out('bpmr',n($('bp')*$('bs'))+' BPM')} function spm(){out('spmr',n($('spb')/$('spv'))+' SPM')} function ptime(){let t=$('tv')/$('tb');out('ptr',n(t)+' menit ('+n(t/60)+' jam)')} function ppgsg(){out('sgr',n($('sgmw')/8.33)+' SG')} function sgppg(){out('sgr',n($('sg')*8.33)+' ppg')} function hsgCalc(){out('hsgr',n(.433*$('hsg')*$('hst'))+' psi')} function kcl(){out('kcr',n(5.63*($('ksg')-1)*$('kb'))+' sack KCl | '+n(5.63*($('ksg')-1)*$('kb')*50)+' kg')} function formation(){out('fpr',n($('fph')+$('fpu'))+' psi')} function diffp(){out('dpr',n($('dp1')-$('dp2'))+' psi')} function overb(){out('obr',n($('obh')-$('obf'))+' psi')} function gain(){let x=$('vgc')-$('vgi');out('vgr',n(x)+(x>0?' Gain':x<0?' Loss':' No change'))} function maasp(){out('maar',n($('maaf')-$('maah'))+' psi')} function ropcalc(){out('ropr',n($('rp')/$('rt'))+' m/hr')} function penetration(){out('prr',n($('prp')*$('prt'))+' m')} function roptime(){out('trres',n($('trd')/$('trr'))+' hr')} 
